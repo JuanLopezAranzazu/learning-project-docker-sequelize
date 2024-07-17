@@ -13,8 +13,20 @@ const validate = (req, res, next) => {
   next();
 };
 
+// Middleware para validar los id de los parametros
+const validateId = (req, res, next) => {
+  const { id } = req.params;
+
+  if (!id || isNaN(id)) {
+    return responseHandler.badrequest(res, "El ID debe ser un número");
+  }
+
+  next();
+};
+
 const requestHandler = {
   validate,
+  validateId,
 };
 
 module.exports = requestHandler;

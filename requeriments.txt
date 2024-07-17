@@ -15,3 +15,5 @@ npm i express-validator
 npm i pg
 npm i pg-hstore
 npm i sequelize
+npm i multer
+npm i path

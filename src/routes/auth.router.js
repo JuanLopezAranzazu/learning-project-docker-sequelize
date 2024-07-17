@@ -10,6 +10,7 @@ const {
 } = require("../controllers/auth.controller");
 //middlewares
 const verifyJWT = require("./../middlewares/verifyJWT");
+const upload= require("./../middlewares/uploadConfig");
 // handlers
 const requestHandler = require("./../handlers/request.handler");
 
@@ -17,6 +18,7 @@ const requestHandler = require("./../handlers/request.handler");
 // api para registrar un usuario
 router.post(
   "/register",
+  upload.single("image"), // middleware para subir la imagen
   body("name")
     .exists()
     .withMessage("El nombre es requerido")

@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+// Configuración de la aplicación
 const config = {
   env: process.env.NODE_ENV || "development",
   port: process.env.PORT || 3000,

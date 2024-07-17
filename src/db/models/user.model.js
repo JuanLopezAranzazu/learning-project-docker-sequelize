@@ -26,6 +26,10 @@ const UserSchema = {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+  image: { // ruta de la imagen
+    allowNull: true,
+    type: DataTypes.STRING,
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,

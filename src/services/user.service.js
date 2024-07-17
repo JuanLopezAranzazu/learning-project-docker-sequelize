@@ -1,4 +1,6 @@
 const { models } = require("./../db/sequelize");
+// handlers
+const responseHandler = require("./../handlers/response.handler");
 
 // Logica de negocio para la entidad User
 class UserService {
@@ -11,13 +13,17 @@ class UserService {
     return users;
   }
 
-  async findOne(id) {
-    const user = await models.User.findOne({
-      where: { id },
-      attributes: { exclude: ["password"] },
-    });
-    if (!user) throw Error("Usuario no encontrado");
-    return user;
+  findOne(id) {
+    return async (res) => {
+      const user = await models.User.findOne({
+        where: { id },
+        attributes: { exclude: ["password"] },
+      });
+      if (!user) {
+        return responseHandler.notfound(res, "Usuario no encontrado");
+      }
+      return user;
+    };
   }
 
   async findByEmail(email) {
@@ -28,22 +34,30 @@ class UserService {
   }
 
   async create(payload) {
-    const savedUser = await models.User.create(payload);
+    const savedUser = await models.User.create(payload, { returning: true });
     return savedUser;
   }
 
-  async update(id, payload) {
-    const user = await this.findOne(id);
-    if (!user) throw Error("Usuario no encontrado");
-    const updatedUser = await user.update(payload);
-    return updatedUser;
+  update(id, payload) {
+    return async (res) => {
+      const user = await this.findOne(id)(res);
+      if (!user) {
+        return responseHandler.notfound(res, "Usuario no encontrado");
+      }
+      const updatedUser = await user.update(payload, { returning: true });
+      return updatedUser;
+    };
   }
 
-  async delete(id) {
-    const user = await this.findOne(id);
-    if (!user) throw Error("Usuario no encontrado");
-    await user.destroy();
-    return id;
+  delete(id) {
+    return async (res) => {
+      const user = await this.findOne(id)(res);
+      if (!user) {
+        return responseHandler.notfound(res, "Usuario no encontrado");
+      }
+      await user.destroy();
+      return id;
+    };
   }
 }
 

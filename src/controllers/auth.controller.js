@@ -1,6 +1,9 @@
 const argon2 = require("argon2");
+// handlers
 const responseHandler = require("./../handlers/response.handler");
+// utils
 const generateToken = require("./../utils/generateToken");
+// services
 const UserService = require("../services/user.service");
 const userService = new UserService();
 
