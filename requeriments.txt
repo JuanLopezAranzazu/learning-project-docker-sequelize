@@ -1,0 +1,17 @@
+npm i
+
+devDependencies
+
+npm i nodemon -D
+
+dependencies
+
+npm i express
+npm i dotenv
+npm i cors
+npm i jsonwebtoken
+npm i argon2
+npm i express-validator
+npm i pg
+npm i pg-hstore
+npm i sequelize
