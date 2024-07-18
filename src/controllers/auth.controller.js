@@ -58,7 +58,7 @@ const userLogin = async (req, res) => {
 const whoAmI = async (req, res) => {
   try {
     const { userId } = req; // user authenticated
-    const user = await userService.findOne(userId);
+    const user = await userService.findOne(userId)(res);
     if (!user) {
       return responseHandler.notfound(res);
     }
